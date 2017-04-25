@@ -6,20 +6,17 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.File;
-
-import static java.awt.SystemColor.text;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by ccc on 23/04/2017.
  */
-public class ComponerPdf {
+public class ComponerImagen {
     String shark = "C:\\Users\\ccc\\Documents\\accentJobcards\\imagenes\\shark.png";
 
-    public ComponerPdf() {
+    public ComponerImagen() {
     }
 
 
@@ -27,7 +24,7 @@ public class ComponerPdf {
 
         PDDocument documentoFinal = new PDDocument();
         AbrePdf jobcard = new AbrePdf();
-        File file = new File("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\original.pdf");
+        File file = new File("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\original2.pdf");
         PDDocument pdforiginal = PDDocument.load(file);
         Iterable<String> s = jobcard.extractLines(pdforiginal);
         MegaParser p = new MegaParser();
@@ -43,34 +40,28 @@ public class ComponerPdf {
                     documentoFinal.addPage(pag);
                     PDPageContentStream contentStream = new PDPageContentStream(documentoFinal, pag);
 
-                    //Setting the font to the Content stream
-                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-                    contentStream.beginText();
-                    contentStream.newLineAtOffset(25, 700);
-
-
                     for (String l : dpt.items) {
 
                         String text = l;
                         //Adding text in the form of string
                         System.out.println(l);
 
-                        contentStream.newLineAtOffset(0, -15);
-                        contentStream.showText(text);
 
+                        PDImageXObject pdImage = PDImageXObject.createFromFile(shark, documentoFinal);
+                        contentStream.drawImage(pdImage, 0, 0);
+
+
+                        contentStream.close();
                     }
-                    contentStream.endText();
-                    contentStream.close();
 
-
+                }
             }
+            documentoFinal.save("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\imagenes.pdf");
+            documentoFinal.close();
+
         }
-        documentoFinal.save("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\final.pdf");
-        documentoFinal.close();
 
     }
-
-}
 
 
 }

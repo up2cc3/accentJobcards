@@ -11,25 +11,35 @@ import java.util.List;
  * esp 3
  * fab 4
  */
-public class  MegaParser {
+public class MegaParser {
+
+    int tops = 0;
+    int screens = 1;
+    int assembly = 2;
+    int esp = 3;
+    int fab = 4;
 
     public List<Order> parse(Iterable<String> lines) {
         List<Order> result = new ArrayList<>();
         Order jobCard = new Order();
         result.add(jobCard);
+
         for (String line : lines) {
 
             // Something with line
             if (line.indexOf("mesa") != -1) {
-                jobCard.addJobOrder(0, line);
+                jobCard.addJobOrder(tops, line);
             }
             if (line.indexOf("screen") != -1 && !line.contains("brackets")) {
-                jobCard.addJobOrder(1, line);
+                jobCard.addJobOrder(screens, line);
             }
-            if (line.indexOf("armario") != -1 && !line.contains("brackets")) {
-                jobCard.addJobOrder(2, line);
+            if (line.indexOf("armario") != -1) {
+                jobCard.addJobOrder(assembly, line);
             }
-            else {jobCard.addJobOrder(4, line);}
+            if (line.indexOf("brackets") != -1) {
+                jobCard.addJobOrder(fab, line);
+            }
+
         }
         return result;
     }
