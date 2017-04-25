@@ -25,7 +25,7 @@ public class ComponerPdf {
 
         PDDocument documentoFinal = new PDDocument();
         AbrePdf jobcard = new AbrePdf();
-        File file = new File("C:\\Users\\ccc\\Documents\\accent-depts\\PDF Departments\\original.pdf");
+        File file = new File("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\original.pdf");
         PDDocument pdforiginal = PDDocument.load(file);
         Iterable<String> s = jobcard.extractLines(pdforiginal);
         MegaParser p = new MegaParser();
@@ -39,33 +39,28 @@ public class ComponerPdf {
                 if (dpt.items.size() > 0) {
                     PDPage pag = new PDPage();
                     documentoFinal.addPage(pag);
+                    PDPageContentStream contentStream = new PDPageContentStream(documentoFinal, pag);
 
+                    //Setting the font to the Content stream
+                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(25, 700);
 
-                    int y = 700;
                     for (String l : dpt.items) {
-                        PDPageContentStream contentStream = new PDPageContentStream(documentoFinal, pag);
-                        contentStream.beginText();
-                        //Setting the font to the Content stream
-                        contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-
-                        //Setting the position for the line
-                        contentStream.newLineAtOffset(25, y);
-                        y = y - 25;
 
                         String text = l;
-
                         //Adding text in the form of string
                         System.out.println(l);
-                        contentStream.showText(text);
-                        contentStream.endText();
 
-                        //Closing the content stream
-                        contentStream.close();
+                        contentStream.newLineAtOffset(0, -15);
+                        contentStream.showText(text);
 
                     }
+                    contentStream.endText();
+                    contentStream.close();
                 }
             }
-            documentoFinal.save("C:\\Users\\ccc\\Documents\\accent-depts\\PDF Departments\\pdf.pdf");
+            documentoFinal.save("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\pdf.pdf");
             documentoFinal.close();
 
         }
