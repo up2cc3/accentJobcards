@@ -57,20 +57,28 @@ public class ComponerPdf {
 
                         contentStream.newLineAtOffset(0, -15);
                         contentStream.showText(text);
+                        if (l.contains("sharknose")) {
+                            PDImageXObject pdImage= PDImageXObject.createFromFile(shark,documentoFinal);
+                            PDPageContentStream imagenStream = new PDPageContentStream(documentoFinal, pag, PDPageContentStream.AppendMode.APPEND,true,true);
+                            float scale=0.8f;
+                            imagenStream.drawImage(pdImage,0,0);
+                            imagenStream.close();
+                        }
+
 
                     }
                     contentStream.endText();
                     contentStream.close();
 
 
+                }
             }
+            documentoFinal.save("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\final.pdf");
+            documentoFinal.close();
+
         }
-        documentoFinal.save("C:\\Users\\ccc\\Documents\\accentJobcards\\PDF Departments\\final.pdf");
-        documentoFinal.close();
 
     }
-
-}
 
 
 }
