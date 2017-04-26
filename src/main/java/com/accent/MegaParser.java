@@ -26,18 +26,29 @@ public class MegaParser {
 
         for (String line : lines) {
 
+            boolean insertado= false;
+
             // Something with line
-            if (line.indexOf("mesa") != -1) {
+
+            if (line.indexOf("top") != -1) {
                 jobCard.addJobOrder(tops, line);
+                insertado=true;
             }
             if (line.indexOf("screen") != -1 && !line.contains("brackets")) {
                 jobCard.addJobOrder(screens, line);
+                insertado=true;
             }
-            if (line.indexOf("armario") != -1) {
+            if (line.indexOf("Unit") != -1) {
                 jobCard.addJobOrder(assembly, line);
+                insertado=true;
             }
-            if (line.indexOf("brackets") != -1) {
+            if (line.indexOf("base") != -1) {
                 jobCard.addJobOrder(fab, line);
+                insertado=true;
+            }
+            
+            if (!insertado){
+                jobCard.addJobOrder(fab,line);
             }
 
         }

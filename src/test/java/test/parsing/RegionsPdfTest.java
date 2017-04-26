@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by ccc on 24/04/2017.
  */
-public class SavePdfTest {
+public class RegionsPdfTest {
     @Test
     public void SavePdf() throws IOException {
         ComponerPdf newPdf = new ComponerPdf();
